@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Math Teacher Website (Next.js App Router)
 
-## Getting Started
+เว็บไซต์รายวิชาคณิตศาสตร์ ม.3 สำหรับนักเรียน ผู้ปกครอง และครูผู้สอน
 
-First, run the development server:
+## Features (Current)
+
+- หน้าเว็บหลักครบ: Home, About, Lessons, Documents, News, Contact, Admin
+- บทเรียนแบบ dynamic route: `/lessons/[id]`
+- ฟอร์มติดต่อผ่าน API: `POST /api/contact`
+- โครงอัปโหลดเอกสารสำหรับครูผ่าน API: `POST /api/admin/documents`
+- หน้าเอกสารรองรับข้อมูลจาก Supabase และ fallback ไป mock data อัตโนมัติ
+
+## Run Project
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Supabase Setup (Phase B Scaffold)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. คัดลอก env
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+2. กำหนดค่าใน `.env.local`
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_SUPABASE_URL=YOUR_PROJECT_URL
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+ADMIN_PASSWORD=YOUR_ADMIN_PASSWORD
+ADMIN_SESSION_SECRET=LONG_RANDOM_SECRET
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. รัน SQL schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- เปิด Supabase SQL Editor
+- วาง SQL จากไฟล์ `supabase/schema.sql`
+- Execute
 
-## Deploy on Vercel
+4. สร้าง Storage bucket
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ชื่อ bucket: `assignments`
+- ตั้งให้ public read (นักเรียนเปิดดูไฟล์ได้โดยไม่ล็อกอิน)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Data Flow
+
+- ครูเข้าสู่ระบบที่ `/admin/login` ก่อนเข้าหน้า `/admin`
+- ครูอัปโหลดไฟล์ที่หน้า `/admin`
+- API `POST /api/admin/documents` อัปโหลดไฟล์เข้า Supabase Storage
+- API `DELETE /api/admin/documents/:id` ลบไฟล์จาก Supabase Storage และลบ metadata
+- API บันทึก metadata ลงตาราง `documents`
+- หน้า `/documents` ดึงข้อมูลจาก Supabase มาแสดงให้นักเรียนดูได้ทันที
+
+## Notes
+
+- endpoint อัปโหลดเอกสารถูกป้องกันด้วย admin session cookie แล้ว
+- แนะนำให้ rotate secrets เป็นระยะ และตั้ง `ADMIN_SESSION_SECRET` ให้ยาวและสุ่ม
