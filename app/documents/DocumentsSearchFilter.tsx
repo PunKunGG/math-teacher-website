@@ -84,7 +84,9 @@ export default function DocumentsSearchFilter({
         items={filteredDocuments.map((document) => ({
           id: document.id,
           title: document.title,
-          detail: `หมวดหมู่: ${document.category}`,
+          detail: `หมวดหมู่: ${document.category}${
+            document.lessonId ? ` | บทเรียนรหัส ${document.lessonId}` : ""
+          }`,
           meta: `ระดับชั้น: ${document.grade} | อัปเดตล่าสุด: ${document.updatedAt} | รูปแบบไฟล์: ${document.fileType}`,
           href: document.fileUrl,
         }))}

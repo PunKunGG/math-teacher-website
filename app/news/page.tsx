@@ -1,4 +1,4 @@
-import ContentList from "@/app/components/ContentList";
+import NewsBoard from "@/app/news/NewsBoard";
 import PageHeader from "@/app/components/PageHeader";
 import SectionCard from "@/app/components/SectionCard";
 import { getAnnouncements } from "@/lib/data-service";
@@ -14,14 +14,7 @@ export default async function NewsPage() {
       />
 
       <SectionCard title="ประกาศล่าสุด">
-        <ContentList
-          items={announcements.map((item) => ({
-            id: item.id,
-            title: item.title,
-            detail: item.detail,
-            meta: `${item.date} | กลุ่มเป้าหมาย: ${item.audience}`,
-          }))}
-        />
+        <NewsBoard announcements={announcements} />
       </SectionCard>
     </article>
   );

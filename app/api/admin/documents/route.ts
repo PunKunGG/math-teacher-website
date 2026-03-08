@@ -43,6 +43,7 @@ export async function POST(request: Request) {
     const title = formData.get("title");
     const category = formData.get("category");
     const grade = formData.get("grade");
+    const lessonIdValue = formData.get("lessonId");
     const file = formData.get("file");
 
     if (!isNonEmpty(title) || !isNonEmpty(category) || !isNonEmpty(grade)) {
@@ -75,14 +76,34 @@ export async function POST(request: Request) {
       );
     }
 
+    let lessonId: number | undefined;
+    if (isNonEmpty(lessonIdValue)) {
+      const parsedLessonId = Number(lessonIdValue);
+      if (!Number.isInteger(parsedLessonId) || parsedLessonId <= 0) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "รหัสบทเรียนที่แนบมากับเอกสารไม่ถูกต้อง",
+          },
+          { status: 400 },
+        );
+      }
+
+      lessonId = parsedLessonId;
+    }
+
     const document = await uploadDocumentToSupabase({
       title,
       category,
       grade,
+      lessonId,
       file,
     });
 
     revalidatePath("/documents");
+    if (lessonId) {
+      revalidatePath(`/lessons/${lessonId}`);
+    }
     revalidatePath("/admin");
 
     return NextResponse.json({

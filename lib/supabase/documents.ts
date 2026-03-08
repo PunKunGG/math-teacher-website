@@ -9,6 +9,7 @@ type SupabaseDocumentRow = {
   title: string;
   category: string;
   grade: string | null;
+  lesson_id: number | null;
   file_type: string;
   file_url: string;
   updated_at: string;
@@ -20,6 +21,7 @@ function mapRowToDocument(row: SupabaseDocumentRow): DocumentItem {
     title: row.title,
     category: row.category,
     grade: row.grade ?? "ม.3",
+    lessonId: row.lesson_id ?? undefined,
     updatedAt: formatDate(row.updated_at),
     fileType: row.file_type,
     fileUrl: row.file_url,
@@ -55,7 +57,9 @@ export async function fetchDocumentsFromSupabase(): Promise<DocumentItem[]> {
 
   const { data, error } = await supabase
     .from(DOCUMENTS_TABLE)
-    .select("id, title, category, grade, file_type, file_url, updated_at")
+    .select(
+      "id, title, category, grade, lesson_id, file_type, file_url, updated_at",
+    )
     .order("updated_at", { ascending: false });
 
   if (error) {
@@ -70,7 +74,9 @@ export async function getDocumentByIdFromSupabase(id: number) {
 
   const { data, error } = await supabase
     .from(DOCUMENTS_TABLE)
-    .select("id, title, category, grade, file_type, file_url, updated_at")
+    .select(
+      "id, title, category, grade, lesson_id, file_type, file_url, updated_at",
+    )
     .eq("id", id)
     .single();
 
@@ -85,6 +91,7 @@ export async function uploadDocumentToSupabase(input: {
   title: string;
   category: string;
   grade: string;
+  lessonId?: number;
   file: File;
 }) {
   const supabase = createSupabaseServerClient();
@@ -116,11 +123,14 @@ export async function uploadDocumentToSupabase(input: {
       title: input.title,
       category: input.category,
       grade: input.grade,
+      lesson_id: input.lessonId ?? null,
       file_type: input.file.type || "application/octet-stream",
       file_url: fileUrl,
       updated_at: new Date().toISOString(),
     })
-    .select("id, title, category, grade, file_type, file_url, updated_at")
+    .select(
+      "id, title, category, grade, lesson_id, file_type, file_url, updated_at",
+    )
     .single();
 
   if (insertResult.error) {
@@ -134,6 +144,7 @@ export async function uploadDocumentToSupabase(input: {
     title: row.title,
     category: row.category,
     grade: row.grade ?? "ม.3",
+    lessonId: row.lesson_id ?? undefined,
     updatedAt: formatDate(row.updated_at),
     fileType: row.file_type,
     fileUrl: row.file_url,

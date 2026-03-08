@@ -50,9 +50,12 @@ export async function DELETE(request: Request, { params }: DeleteParams) {
   }
 
   try {
-    await deleteDocumentFromSupabase(numericId);
+    const deletedDocument = await deleteDocumentFromSupabase(numericId);
 
     revalidatePath("/documents");
+    if (deletedDocument.lessonId) {
+      revalidatePath(`/lessons/${deletedDocument.lessonId}`);
+    }
     revalidatePath("/admin");
 
     return NextResponse.json({

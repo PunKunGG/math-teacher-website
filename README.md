@@ -38,7 +38,12 @@ ADMIN_SESSION_SECRET=LONG_RANDOM_SECRET
 
 - เปิด Supabase SQL Editor
 - วาง SQL จากไฟล์ `supabase/schema.sql`
+- วาง SQL จากไฟล์ `supabase/announcements.sql`
+- วาง SQL จากไฟล์ `supabase/lessons.sql`
 - Execute
+
+หมายเหตุ: หากเคยรัน SQL ไปแล้วก่อนหน้านี้ ให้รัน `supabase/lessons.sql` อีกครั้ง
+เพื่อเพิ่มความสัมพันธ์ `documents.lesson_id -> lessons.id`
 
 4. สร้าง Storage bucket
 
@@ -49,10 +54,20 @@ ADMIN_SESSION_SECRET=LONG_RANDOM_SECRET
 
 - ครูเข้าสู่ระบบที่ `/admin/login` ก่อนเข้าหน้า `/admin`
 - ครูอัปโหลดไฟล์ที่หน้า `/admin`
+- ครูเพิ่มประกาศได้ที่หน้า `/admin`
+- ครูเพิ่ม/แก้ไข/ลบบทเรียนได้ที่หน้า `/admin`
+- ครูแนบเอกสารประกอบไปพร้อมกับการสร้างบทเรียนได้
 - API `POST /api/admin/documents` อัปโหลดไฟล์เข้า Supabase Storage
 - API `DELETE /api/admin/documents/:id` ลบไฟล์จาก Supabase Storage และลบ metadata
+- API `POST /api/admin/announcements` เพิ่มประกาศใหม่
+- API `POST /api/admin/lessons` เพิ่มบทเรียน
+- API `PATCH /api/admin/lessons/:id` แก้ไขบทเรียน
+- API `DELETE /api/admin/lessons/:id` ลบบทเรียน
 - API บันทึก metadata ลงตาราง `documents`
+- เอกสารที่แนบจากฟอร์มบทเรียนจะถูกผูกกับ `lessonId` อัตโนมัติ
 - หน้า `/documents` ดึงข้อมูลจาก Supabase มาแสดงให้นักเรียนดูได้ทันที
+- หน้า `/news` ดึงประกาศที่อยู่ในช่วงเวลาแสดงผล พร้อมเรียงปักหมุดก่อนเสมอ
+- หน้า `/lessons` และ `/lessons/[id]` ดึงข้อมูลจาก Supabase และ fallback เป็น mock data อัตโนมัติ
 
 ## Notes
 
