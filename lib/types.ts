@@ -26,8 +26,10 @@ export type DocumentItem = {
   id: number;
   title: string;
   category: string;
+  grade: string;
   updatedAt: string;
   fileType: string;
+  fileUrl?: string;
 };
 
 export type AnnouncementItem = {

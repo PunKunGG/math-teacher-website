@@ -1,9 +1,29 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import LogoutButton from "@/app/admin/LogoutButton";
+import AdminDocumentsManager from "@/app/admin/AdminDocumentsManager";
 import PageHeader from "@/app/components/PageHeader";
 import SectionCard from "@/app/components/SectionCard";
-import { getAdminStats, getAdminTasks } from "@/lib/data-service";
+import AdminUploadForm from "@/app/admin/AdminUploadForm";
+import { getAdminStats, getAdminTasks, getDocuments } from "@/lib/data-service";
+import {
+  getAdminCookieName,
+  verifyAdminSessionToken,
+} from "@/lib/auth/admin-session";
 
 export default async function AdminPage() {
-  const [stats, tasks] = await Promise.all([getAdminStats(), getAdminTasks()]);
+  const cookieStore = await cookies();
+  const session = cookieStore.get(getAdminCookieName())?.value;
+
+  if (!verifyAdminSessionToken(session)) {
+    redirect("/admin/login");
+  }
+
+  const [stats, tasks, documents] = await Promise.all([
+    getAdminStats(),
+    getAdminTasks(),
+    getDocuments(),
+  ]);
 
   return (
     <article className="space-y-8 py-8">
@@ -11,6 +31,10 @@ export default async function AdminPage() {
         title="หน้าผู้ดูแลระบบ"
         description="โครงหน้าจัดการข้อมูลเว็บไซต์สำหรับครูผู้สอน (ใช้ข้อมูลจำลองในระยะพัฒนา)"
       />
+
+      <div className="flex justify-end">
+        <LogoutButton />
+      </div>
 
       <SectionCard title="ภาพรวมข้อมูล">
         <div className="grid gap-4 sm:grid-cols-3">
@@ -53,6 +77,18 @@ export default async function AdminPage() {
           จึงสามารถเปลี่ยนจากข้อมูลจำลองไปเป็น Supabase
           ได้โดยแก้เฉพาะส่วนดึงข้อมูล
         </p>
+      </SectionCard>
+
+      <SectionCard title="อัปโหลดเอกสารสำหรับนักเรียน">
+        <p className="mb-4 text-slate-700">
+          เมื่อระบบ Supabase ถูกตั้งค่าแล้ว ครูสามารถอัปโหลดไฟล์จากเครื่อง
+          และไฟล์จะไปแสดงที่หน้าเอกสารโดยอัตโนมัติ
+        </p>
+        <AdminUploadForm />
+      </SectionCard>
+
+      <SectionCard title="จัดการเอกสารที่อัปโหลดแล้ว">
+        <AdminDocumentsManager initialDocuments={documents} />
       </SectionCard>
     </article>
   );
