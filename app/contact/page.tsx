@@ -1,6 +1,7 @@
 import ContentList from "@/app/components/ContentList";
 import PageHeader from "@/app/components/PageHeader";
 import SectionCard from "@/app/components/SectionCard";
+import ContactForm from "@/app/contact/ContactForm";
 import { getContactChannels } from "@/lib/data-service";
 
 export default async function ContactPage() {
@@ -21,6 +22,10 @@ export default async function ContactPage() {
             detail: channel.note,
           }))}
         />
+      </SectionCard>
+
+      <SectionCard title="แบบฟอร์มส่งคำถาม">
+        <ContactForm />
       </SectionCard>
 
       <SectionCard title="เวลาติดต่อที่แนะนำ">

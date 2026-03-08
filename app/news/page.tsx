@@ -10,7 +10,7 @@ export default async function NewsPage() {
     <article className="space-y-8 py-8">
       <PageHeader
         title="ประกาศและข่าวสาร"
-        description="ติดตามกำหนดการเรียน การสอบ และกิจกรรมสำคัญของรายวิชาคณิตศาสตร์"
+        description="ติดตามกำหนดการเรียน การสอบ และกิจกรรมสำคัญของรายวิชาคณิตศาสตร์ ม.3"
       />
 
       <SectionCard title="ประกาศล่าสุด">

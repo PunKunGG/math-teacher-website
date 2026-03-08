@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "เว็บไซต์ครูคณิตศาสตร์",
-  description: "ข้อมูลรายวิชา ข่าวสาร และเอกสารสำหรับนักเรียน",
+  title: "เว็บไซต์คณิตศาสตร์ ม.3",
+  description:
+    "ข้อมูลรายวิชาคณิตศาสตร์ ม.3 ข่าวสาร และเอกสารสำหรับนักเรียนและผู้ปกครอง",
 };
 
 export default function RootLayout({

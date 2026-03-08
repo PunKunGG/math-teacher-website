@@ -26,7 +26,7 @@ export default async function Home() {
 
       <SectionCard
         title="แนวทางการสอน"
-        description="เรียนรู้แบบค่อยเป็นค่อยไป เน้นความเข้าใจและการนำไปใช้จริง"
+        description="ออกแบบสำหรับนักเรียน ม.3 เน้นความเข้าใจเชิงลึกและการเตรียมสอบ"
       >
         <ul className="space-y-3">
           {values.map((value) => (

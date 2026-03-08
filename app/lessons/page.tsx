@@ -9,8 +9,8 @@ export default async function LessonsPage() {
   return (
     <article className="space-y-8 py-8">
       <PageHeader
-        title="บทเรียนคณิตศาสตร์"
-        description="รวมบทเรียนรายหน่วย พร้อมคำอธิบายสั้นเพื่อช่วยนักเรียนเตรียมตัวล่วงหน้า"
+        title="บทเรียนคณิตศาสตร์ ม.3"
+        description="รวมบทเรียนรายหน่วยสำหรับ ม.3 พร้อมคำอธิบายสั้นเพื่อช่วยนักเรียนเตรียมตัวล่วงหน้า"
       />
 
       <SectionCard title="รายการบทเรียนล่าสุด">
@@ -20,6 +20,7 @@ export default async function LessonsPage() {
             title: lesson.title,
             detail: lesson.summary,
             meta: `ระดับชั้น: ${lesson.grade}`,
+            href: `/lessons/${lesson.id}`,
           }))}
         />
       </SectionCard>
