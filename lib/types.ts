@@ -17,6 +17,9 @@ export type LessonItem = {
   title: string;
   grade: string;
   summary: string;
+  duration: string;
+  updatedAt: string;
+  objectives: string[];
 };
 
 export type DocumentItem = {

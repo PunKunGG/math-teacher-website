@@ -14,7 +14,7 @@ export default function Navbar() {
     <header className="border-b border-slate-200 bg-white">
       <nav className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-4">
         <p className="text-sm font-semibold text-slate-900">
-          คณิตศาสตร์กับครูอรทัย
+          คณิตศาสตร์ ม.3 กับครูอรทัย
         </p>
         <div className="flex flex-wrap items-center gap-4">
           {navLinks.map((link) => (

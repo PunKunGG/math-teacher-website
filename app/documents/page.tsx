@@ -9,8 +9,8 @@ export default async function DocumentsPage() {
   return (
     <article className="space-y-8 py-8">
       <PageHeader
-        title="เอกสารประกอบการเรียน"
-        description="รวมใบงาน แบบฝึกหัด และเอกสารสรุปสำหรับนักเรียนและผู้ปกครอง"
+        title="เอกสารประกอบการเรียน ม.3"
+        description="รวมใบงาน แบบฝึกหัด และเอกสารสรุปคณิตศาสตร์ ม.3 สำหรับนักเรียนและผู้ปกครอง"
       />
 
       <SectionCard title="รายการเอกสาร">

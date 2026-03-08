@@ -22,6 +22,14 @@ export async function getLessons() {
   return lessons;
 }
 
+export async function getLessonById(id: number) {
+  return lessons.find((lesson) => lesson.id === id) ?? null;
+}
+
+export async function getLessonIds() {
+  return lessons.map((lesson) => lesson.id);
+}
+
 export async function getDocuments() {
   return documents;
 }
