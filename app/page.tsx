@@ -58,9 +58,9 @@ export default async function Home() {
           <ContentList
             items={announcements.slice(0, 3).map((item) => ({
               id: item.id,
-              title: item.title,
+              title: `${item.isPinned ? "[ปักหมุด] " : ""}${item.title}`,
               detail: item.detail,
-              meta: `${item.date} | ${item.audience}`,
+              meta: `${item.date} | ${item.category} | ความสำคัญ: ${item.priority}`,
               href: "/news",
             }))}
           />

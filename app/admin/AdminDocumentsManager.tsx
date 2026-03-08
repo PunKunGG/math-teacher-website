@@ -82,6 +82,11 @@ export default function AdminDocumentsManager({
                 <p className="mt-1 text-xs text-slate-600">
                   {document.category} | {document.grade} | {document.updatedAt}
                 </p>
+                {document.lessonId ? (
+                  <p className="mt-1 text-xs text-indigo-700">
+                    ผูกกับบทเรียนรหัส: {document.lessonId}
+                  </p>
+                ) : null}
               </div>
               <button
                 type="button"

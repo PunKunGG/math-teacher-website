@@ -1,11 +1,18 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/app/admin/LogoutButton";
+import AdminAnnouncementForm from "@/app/admin/AdminAnnouncementForm";
+import AdminLessonsManager from "@/app/admin/AdminLessonsManager";
 import AdminDocumentsManager from "@/app/admin/AdminDocumentsManager";
 import PageHeader from "@/app/components/PageHeader";
 import SectionCard from "@/app/components/SectionCard";
 import AdminUploadForm from "@/app/admin/AdminUploadForm";
-import { getAdminStats, getAdminTasks, getDocuments } from "@/lib/data-service";
+import {
+  getAdminStats,
+  getAdminTasks,
+  getDocuments,
+  getLessons,
+} from "@/lib/data-service";
 import {
   getAdminCookieName,
   verifyAdminSessionToken,
@@ -19,17 +26,18 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  const [stats, tasks, documents] = await Promise.all([
+  const [stats, tasks, documents, lessons] = await Promise.all([
     getAdminStats(),
     getAdminTasks(),
     getDocuments(),
+    getLessons(),
   ]);
 
   return (
     <article className="space-y-8 py-8">
       <PageHeader
         title="หน้าผู้ดูแลระบบ"
-        description="โครงหน้าจัดการข้อมูลเว็บไซต์สำหรับครูผู้สอน (ใช้ข้อมูลจำลองในระยะพัฒนา)"
+        description="พื้นที่จัดการข้อมูลรายวิชาคณิตศาสตร์ ม.3 สำหรับครูผู้สอน"
       />
 
       <div className="flex justify-end">
@@ -71,11 +79,10 @@ export default async function AdminPage() {
         </ul>
       </SectionCard>
 
-      <SectionCard title="พร้อมเชื่อมต่อ Supabase">
+      <SectionCard title="แนวทางดูแลเนื้อหารายวิชา">
         <p className="text-slate-700">
-          หน้านี้แยกชั้นข้อมูลไว้ที่ไฟล์ service แล้ว
-          จึงสามารถเปลี่ยนจากข้อมูลจำลองไปเป็น Supabase
-          ได้โดยแก้เฉพาะส่วนดึงข้อมูล
+          ควรอัปเดตบทเรียนและเอกสารให้สอดคล้องกับแผนการสอนรายสัปดาห์
+          เพื่อให้นักเรียนและผู้ปกครองติดตามข้อมูลได้อย่างต่อเนื่อง
         </p>
       </SectionCard>
 
@@ -85,6 +92,25 @@ export default async function AdminPage() {
           และไฟล์จะไปแสดงที่หน้าเอกสารโดยอัตโนมัติ
         </p>
         <AdminUploadForm />
+      </SectionCard>
+
+      <SectionCard title="เพิ่มประกาศสำหรับนักเรียน">
+        <p className="mb-4 text-slate-700">
+          ใช้ฟอร์มนี้เพื่อประกาศการบ้าน ตารางสอบ หรือกิจกรรม
+          โดยสามารถกำหนดการปักหมุดและช่วงเวลาแสดงผลได้
+        </p>
+        <AdminAnnouncementForm />
+      </SectionCard>
+
+      <SectionCard title="จัดการบทเรียนคณิตศาสตร์">
+        <p className="mb-4 text-slate-700">
+          เพิ่ม แก้ไข และลบบทเรียนได้จากส่วนนี้
+          ข้อมูลจะถูกอัปเดตที่หน้าบทเรียนและหน้ารายละเอียดโดยอัตโนมัติ
+        </p>
+        <AdminLessonsManager
+          initialLessons={lessons}
+          initialDocuments={documents}
+        />
       </SectionCard>
 
       <SectionCard title="จัดการเอกสารที่อัปโหลดแล้ว">
