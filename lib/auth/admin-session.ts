@@ -89,6 +89,34 @@ export function getAdminSessionMaxAgeSeconds() {
   return SESSION_MAX_AGE_SECONDS;
 }
 
+function isLocalHostname(hostname: string) {
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    hostname === "[::1]"
+  );
+}
+
+export function shouldUseSecureAdminCookie(request: Request) {
+  const forwardedProto = request.headers
+    .get("x-forwarded-proto")
+    ?.split(",")[0]
+    ?.trim()
+    .toLowerCase();
+
+  if (forwardedProto) {
+    return forwardedProto === "https";
+  }
+
+  const requestUrl = new URL(request.url);
+  if (isLocalHostname(requestUrl.hostname)) {
+    return false;
+  }
+
+  return process.env.NODE_ENV === "production";
+}
+
 export function getCookieValueFromHeader(
   cookieHeader: string | null,
   cookieName: string,

@@ -88,7 +88,7 @@ export default async function AdminPage() {
 
       <SectionCard title="อัปโหลดเอกสารสำหรับนักเรียน">
         <p className="mb-4 text-slate-700">
-          เมื่อระบบ Supabase ถูกตั้งค่าแล้ว ครูสามารถอัปโหลดไฟล์จากเครื่อง
+          ครูสามารถอัปโหลดไฟล์จากเครื่อง
           และไฟล์จะไปแสดงที่หน้าเอกสารโดยอัตโนมัติ
         </p>
         <AdminUploadForm />

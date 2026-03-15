@@ -8,7 +8,7 @@ import {
   verifyAdminSessionToken,
 } from "@/lib/auth/admin-session";
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB for Vercel body-size compatibility
 
 function isNonEmpty(value: FormDataEntryValue | null): value is string {
   return typeof value === "string" && value.trim().length > 0;
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          message: "ขนาดไฟล์ต้องไม่เกิน 10 MB",
+          message: "ขนาดไฟล์ต้องไม่เกิน 4 MB",
         },
         { status: 400 },
       );
