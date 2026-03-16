@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
-import { getAdminCookieName } from "@/lib/auth/admin-session";
+import {
+  getAdminCookieName,
+  shouldUseSecureAdminCookie,
+} from "@/lib/auth/admin-session";
 
-export async function POST() {
+export async function POST(request: Request) {
   const response = NextResponse.json({
     success: true,
     message: "ออกจากระบบเรียบร้อยแล้ว",
@@ -12,7 +15,7 @@ export async function POST() {
     value: "",
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureAdminCookie(request),
     path: "/",
     maxAge: 0,
   });

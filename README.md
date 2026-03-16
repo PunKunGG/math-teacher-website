@@ -25,7 +25,7 @@ npm run dev
 cp .env.example .env.local
 ```
 
-2. กำหนดค่าใน `.env.local`
+1. กำหนดค่าใน `.env.local`
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=YOUR_PROJECT_URL
@@ -34,7 +34,7 @@ ADMIN_PASSWORD=YOUR_ADMIN_PASSWORD
 ADMIN_SESSION_SECRET=LONG_RANDOM_SECRET
 ```
 
-3. รัน SQL schema
+1. รัน SQL schema
 
 - เปิด Supabase SQL Editor
 - วาง SQL จากไฟล์ `supabase/schema.sql`
@@ -45,7 +45,7 @@ ADMIN_SESSION_SECRET=LONG_RANDOM_SECRET
 หมายเหตุ: หากเคยรัน SQL ไปแล้วก่อนหน้านี้ ให้รัน `supabase/lessons.sql` อีกครั้ง
 เพื่อเพิ่มความสัมพันธ์ `documents.lesson_id -> lessons.id`
 
-4. สร้าง Storage bucket
+1. สร้าง Storage bucket
 
 - ชื่อ bucket: `assignments`
 - ตั้งให้ public read (นักเรียนเปิดดูไฟล์ได้โดยไม่ล็อกอิน)
@@ -73,3 +73,4 @@ ADMIN_SESSION_SECRET=LONG_RANDOM_SECRET
 
 - endpoint อัปโหลดเอกสารถูกป้องกันด้วย admin session cookie แล้ว
 - แนะนำให้ rotate secrets เป็นระยะ และตั้ง `ADMIN_SESSION_SECRET` ให้ยาวและสุ่ม
+- หาก deploy บน Vercel การอัปโหลดผ่าน route handler ควรจำกัดไฟล์ไม่เกิน `4 MB` เพื่อไม่ชน request body limit ของ Vercel Functions
