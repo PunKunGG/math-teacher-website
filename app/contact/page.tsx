@@ -30,7 +30,7 @@ export default async function ContactPage() {
 
       <SectionCard title="เวลาติดต่อที่แนะนำ">
         <p className="text-slate-700">
-          วันจันทร์-ศุกร์ เวลา 08:30-16:30 น.
+          วันจันทร์-ศุกร์ เวลา 10.00-15.00 น.
           หากเป็นกรณีเร่งด่วนโปรดระบุหัวข้อให้ชัดเจนเพื่อความรวดเร็วในการตอบกลับ
         </p>
       </SectionCard>

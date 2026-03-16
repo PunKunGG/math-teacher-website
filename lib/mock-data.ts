@@ -14,7 +14,7 @@ export const teacherProfile: TeacherProfile = {
   intro:
     "มุ่งเน้นให้นักเรียนเข้าใจคณิตศาสตร์อย่างเป็นระบบ พร้อมนำไปใช้แก้ปัญหาในชีวิตจริง",
   experienceYears: 12,
-  email: "math.m3@school.ac.th",
+  email: "phusrion@gmail.com",
 };
 
 export const teachingValues: TeachingValue[] = [
@@ -280,19 +280,19 @@ export const contactChannels: ContactChannel[] = [
   {
     id: 1,
     name: "อีเมล",
-    value: "math.m3@school.ac.th",
+    value: "phusrion@gmail.com",
     note: "เหมาะสำหรับคำถามด้านบทเรียนและเอกสาร",
   },
   {
     id: 2,
-    name: "โทรศัพท์โรงเรียน",
-    value: "02-123-4567 ต่อ 204",
-    note: "ติดต่อในวันจันทร์-ศุกร์ เวลา 08:30-16:30 น.",
+    name: "โทรศัพท์",
+    value: "085-255-2966",
+    note: "ติดต่อในวันจันทร์-ศุกร์ เวลา 10.00-15.00 น.",
   },
   {
     id: 3,
     name: "Line กลุ่มผู้ปกครอง",
-    value: "MathM3-Parents",
+    value: "-",
     note: "ใช้ประกาศข่าวสารและกำหนดการสำคัญ",
   },
 ];
