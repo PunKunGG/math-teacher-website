@@ -8,6 +8,8 @@ type UploadFormState = {
   grade: string;
 };
 
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
+
 const initialForm: UploadFormState = {
   title: "",
   category: "ใบงาน",
@@ -37,6 +39,11 @@ export default function AdminUploadForm() {
 
     if (!file) {
       setError("กรุณาเลือกไฟล์ที่ต้องการอัปโหลด");
+      return;
+    }
+
+    if (file.size === 0 || file.size > MAX_FILE_SIZE) {
+      setError("ขนาดไฟล์ต้องไม่เกิน 4 MB");
       return;
     }
 
@@ -141,7 +148,7 @@ export default function AdminUploadForm() {
           htmlFor="file"
           className="mb-1 block text-sm font-medium text-slate-800"
         >
-          เลือกไฟล์ (ไม่เกิน 10 MB)
+          เลือกไฟล์ (ไม่เกิน 4 MB)
         </label>
         <input
           id="file"
@@ -151,6 +158,9 @@ export default function AdminUploadForm() {
           disabled={isSubmitting}
           accept=".pdf,.doc,.docx,.xlsx,.ppt,.pptx"
         />
+        <p className="mt-1 text-xs text-slate-500">
+          สำหรับ deploy บน Vercel รองรับไฟล์ไม่เกิน 4 MB
+        </p>
       </div>
 
       <button
